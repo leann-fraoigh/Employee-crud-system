@@ -1,6 +1,6 @@
 import { FetcherWithComponents } from 'react-router-dom';
 // Компоненты
-import { TextMaskInput } from './TextMaskInput';
+import { TextMaskInput } from './TextMaskInput.tsx';
 // UI
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,7 @@ import FormGroup from '@mui/material/FormGroup';
 import Input from '@mui/material/Input';
 import Check from '@mui/icons-material/Check';
 // Типы
-import { Employee } from "../../model";
+import { Employee } from '../../model/index.ts';
 
 const containerStyle = {
   display: 'flex',
@@ -29,11 +29,12 @@ interface Props {
   fetcher: FetcherWithComponents<never>;
   state: 'success' | 'initial' | 'submitting';
   data?: Employee;
+  newId?: string;
   method: 'POST' | 'PATCH'
 }
 
-export default function EmployeeEditForm(props: Props) {
-  const { method, fetcher, state } = props;
+export function EmployeeForm(props: Props) {
+  const { method, fetcher, state, newId } = props;
   const { name, birthday, phone, isArchive, role  } = props.data ?? {};
 
   const text = {
@@ -41,10 +42,15 @@ export default function EmployeeEditForm(props: Props) {
     callToAction: method === 'POST' ? 'Опубликовать' : 'Отредактировать',
     successMessage: method === 'POST' ? 'Данные добавленф.' : 'Даные отредактированы.', 
   }
+
   return (
     <fetcher.Form method={method} action='#' >
       <Box sx={ containerStyle }>
-        <Typography gutterBottom variant="h5" component="h4" sx={{ width: '100%', mb: 0.5 }}>{text.title}</Typography>
+        <Typography gutterBottom variant="h5" component="h2" sx={{ width: '100%', mb: 0.5 }}>{text.title}</Typography>
+        {newId && (
+          /* ID */
+          <TextField id="employeeId" label="ID" variant="standard" name='employeeId' value={newId} type='hidden' sx={{ display: 'none' }} required />
+        )}
         {/* Имя */}
         <TextField id="name" label="Имя" variant="standard" name='name' defaultValue={name} required />
         {/* Телефон */}

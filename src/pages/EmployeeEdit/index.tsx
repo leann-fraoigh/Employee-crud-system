@@ -2,15 +2,16 @@ import { useSelector } from "react-redux";
 import { useParams, useFetcher } from "react-router-dom";
 import { RootState } from '../../store';
 // Кастомные хуки
-import { useFromWithFetcher } from './useFormWithFetcher';
+import { useFromWithFetcher } from "../../shared/EmployeeForm/useFormWithFetcher";
+
 // Компоненты
-import EmployeeEditForm from "./EmployeeEditForm";
+import { EmployeeForm } from "../../shared/EmployeeForm";
 // Типы
 import { Employee } from "../../model";
 // UI
-import { Typography, Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
-export default function EmployeesEdit() {
+export default function EmployeeEdit() {
   const fetcher = useFetcher();
   const { formState } = useFromWithFetcher(fetcher);
   const id = useParams<{ id: string }>().id?.slice(1) ?? '';
@@ -20,9 +21,8 @@ export default function EmployeesEdit() {
   return (
     <>
       <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', flexDirection: 'column',  mb: 1.5, gap: 1.5 }} >
-        <Typography variant="h5" component="h2">Редактировать данные о сотруднике</Typography>
         {employee ? (
-          <EmployeeEditForm data={employee} state={formState} method="PATCH" fetcher={fetcher}/>
+          <EmployeeForm data={employee} state={formState} method="PATCH" fetcher={fetcher}/>
         ) : (
           <div>К сожалению, мы не нашли данных об этом сотруднике.</div>
         )}

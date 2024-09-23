@@ -10,6 +10,8 @@ import Employees from '../pages/Employees/index.tsx';
 import { loader as employeesLoader } from '../pages/Employees/loader.ts';
 import EmployeeEdit from '../pages/EmployeeEdit/index.tsx';
 import { action as employeeEditAction } from '../pages/EmployeeEdit/action.ts';
+import EmployeeAdd from '../pages/EmployeeAdd/index.tsx';
+import { action as employeeAddAction } from '../pages/EmployeeAdd/action.ts';
 import Root from '../pages/Root.tsx';
 import Error from '../pages/Error.tsx';
 
@@ -28,6 +30,12 @@ export const router = createBrowserRouter(
         element={<EmployeeEdit />}
         errorElement={<Error />}
         action={employeeEditAction}
+      ></Route>
+      <Route
+        path="/employees/new"
+        element={<EmployeeAdd />}
+        errorElement={<Error />}
+        action={employeeAddAction}
       ></Route>
     </Route>
   )
